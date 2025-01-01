@@ -68,10 +68,10 @@ async function loginProcess(req,res) {
     }
 }
 
-(async () => {
-    await testRegistration();
-    await loginProcess();
-})();
+// (async () => {
+//     await testRegistration();
+//     await loginProcess();
+// })();
 
 async function loginPage(req,res) {
     try {
