@@ -1,5 +1,6 @@
 const prisma = require('./config/db');
 
+//places
 const trivandrumPlaces = {
   Kazhakkootam: ["Technopark", "Kulathoor", "Karyavattom", "Pothencode", "Sreekaryam"],
   Attingal: ["Manampur", "Moonnamoodu", "Kizhakkupuram", "Cherunniyoor", "Thonnakkal"],
