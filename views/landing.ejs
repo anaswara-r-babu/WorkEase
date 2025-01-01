@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkEase - Find the Perfect Employee</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/stylesheets/styleindex.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">WorkEase</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <% if (!userActive) { %>
+                        <li class="nav-item"><a href="/user/userlogin" class="nav-link wht-links">Sign In</a></li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a href="/user/dashboardUser" class="nav-link username-link">
+                                <span class="name-box"><%= userdetails.name.charAt(0).toUpperCase() %></span><%= userdetails.name.slice(1) %>
+                            </a>
+                        </li>
+                    <% } %>
+                    <li class="nav-item"><a href="/user/userReg" class="nav-link wht-links">User Account</a></li>
+                    <li class="nav-item"><a href="/employee/empReg" class="nav-link wht-links">Employee Account</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Showcase Section -->
+    <section class="showcase text-center text-md-start">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-4">Find the Perfect <span>Employee</span></h1>
+                    <p class="lead my-3">Discover skilled professionals for your specific needs in no time.</p>
+                    <a href="#searchSection" class="btn btn-warning btn-lg">Get Started</a>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="assets/img/showcase/people-blue-orange.jpg" class="img-fluid" alt="puzzle Image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4 fw-bold">How It Works</h2>
+            <div class="row g-4">
+                <div class="col-md-3 text-center">
+                    <div class="card p-4">
+                        <i class="bi bi-person-circle"></i>
+                        <h5 class="mt-3">Step 1</h5>
+                        <p>Create or log in to your account.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="card p-4">
+                        <i class="bi bi-search"></i>
+                        <h5 class="mt-3">Step 2</h5>
+                        <p>Enter location and job category.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="card p-4">
+                        <i class="bi bi-list"></i>
+                        <h5 class="mt-3">Step 3</h5>
+                        <p>View available professionals.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="card p-4">
+                        <i class="bi bi-calendar-check"></i>
+                        <h5 class="mt-3">Step 4</h5>
+                        <p>Book your preferred employee.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overviewSection" class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Employee Overview -->
+                <div class="col-md-6">
+                    <div class="employee-info card p-4">
+                        <h3 class="text-center fw-bold">What Our Employees Do</h3>
+                        <p>Our employees offer high-quality services in various fields, from home repairs to tutoring. They are dedicated to completing tasks efficiently and professionally.</p>
+                        <ul>
+                            <li>Manage profiles and availability</li>
+                            <li>Accept or decline job bookings</li>
+                            <li>Complete tasks with professionalism</li>
+                            <li>Receive feedback for improvement</li>
+                        </ul>
+                        <p>Find the perfect employee and get started today!</p>
+                    </div>
+                </div>
+                <!-- User Overview -->
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h3 class="text-center fw-bold">What Users Can Do</h3>
+                        <p class="mt-3">
+                            As a user, you can search for employees by location and category, view availability, and easily book them for tasks.
+                        </p>
+                        <ul>
+                            <li>Search for employees based on location and category</li>
+                            <li>View employee availability</li>
+                            <li>Book employees for specific tasks</li>
+                            <li>Rate and review completed tasks</li>
+                        </ul>
+
+                        <p>Quick, easy, and tailored to your needs!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section id="searchSection" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4 fw-bold">Search Employees</h2>
+            <form id="searchForm" class="d-flex align-items-center">
+                <select name="place" id="place" class="form-select me-2">
+                    <option value="" disabled selected>Select a Place</option>
+                    <% places.forEach(i => { %>
+                        <option value="<%= i %>"><%= i %></option>
+                    <% }) %>
+                </select>
+                <select id="jobTitle" name="jobTitle" class="form-select me-2" required>
+                    <option value="" disabled selected>Select your job title</option>
+                    <% jobCategories.forEach(i => { %>
+                        <option value="<%= i.id %>"><%= i.jobName %></option>
+                    <% }) %>
+                </select>
+                <button id="searchButton" class="btn btn-dark btn-sm" type="button">Search</button>
+            </form>
+        </div>
+        <div class="container mt-4" id="resultsContainer">
+            <!-- Table will be dynamically generated here -->
+        </div>
+    </section>
+
+    <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="taskModalLabel">Task Description</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <textarea id="taskDescription" class="form-control" rows="4" placeholder="Describe the task"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" id="confirmBooking" class="btn btn-primary">Book</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- modal for view  -->
+    <div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="employeeModalLabel">Employee Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body reviews-body">
+                    <!-- <div class="text-left mb-3">
+                        <img id="employeePhoto" src="/assets/img/png-transparent-user-profile.png" alt="Employee Photo" class="rounded-circle" width="40" height="40">
+                    </div> -->
+                    <p><strong>Name  :  </strong> <span id="employeeName"></span></p>
+                    <p><strong>Job Title  :  </strong> <span id="employeeJobTitle"></span></p>
+                    <p><strong>Place  :  </strong> <span id="employeePlace"></span></p>
+                    <p><strong>Availability  :  </strong> <span id="employeeAvailability"></span></p>
+                    <p><strong>Contact  :  </strong> <span id="employeeContact"></span></p>
+                    <p><strong>Performance  :  </strong> <span id="employeePerformance"></span></p>
+                    <hr>
+                    <h6>Reviews  :</h6>
+                    <ul id="employeeReviews" class="list-unstyled">
+                        <!-- Reviews will be populated dynamically -->
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+      <script>
+            $(document).ready(function() {
+            $('.select-place').select2();
+        });
+      </script>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light text-center py-3">
+        <p class="mb-0">© 2024 WorkEase. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let a;
+        const taskModal = document.getElementById('taskModal');
+    
+        <% if (userId === undefined || userId === null) { %>
+            a = null;
+        <% } else { %>
+            a = <%= userId %>;
+        <% } %>
+    
+        console.log('User ID:', a);
+    
+        // Search Button Event Listener
+        document.getElementById('searchButton').addEventListener('click', async () => {
+            const form = document.getElementById('searchForm');
+            const formData = new FormData(form);
+    
+            console.log('Form Data:', {
+                place: formData.get('place'),
+                jobTitle: formData.get('jobTitle'),
+            });
+    
+            try {
+                const response = await fetch('/landing', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        place: formData.get('place'),
+                        jobTitle: formData.get('jobTitle'),
+                    }),
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+    
+                const data = await response.json();
+                console.log('Fetched Data:', data);
+                renderResults(data);
+            } catch (error) {
+                console.error('Error fetching results:', error);
+            }
+        });
+    
+        // Function to Render Results in Table
+        function renderResults(data) {
+        const container = document.getElementById('resultsContainer');
+        container.innerHTML = ''; // Clear previous results
+    
+        // Check if data exists and contains valid employees
+        if (data && Array.isArray(data) && data.length > 0) {
+            // Filter out employees who are not booked (isBooked: false)
+            const availableEmployees = data.filter(employee => !employee.isBooked);
+    
+            // Check if there are available employees to display
+            if (availableEmployees.length > 0) {
+                const table = document.createElement('table');
+                table.classList.add('table','results-table','table-bordered','table-striped');
+    
+                const thead = `
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Job Title</th>
+                            <th>Contact</th>
+                            <th>Place</th>
+                            <th colspan="2">Actions</th>
+                        </tr>
+                    </thead>
+                `;
+    
+                // Generate rows for each non-booked employee
+                const rows = availableEmployees.map(employee => `
+                    <tr>
+                        <td>${employee.name.charAt(0).toUpperCase() + employee.name.slice(1).toLowerCase()}</td>
+                        <td>${employee.jobCategory?.jobName ? employee.jobCategory.jobName.charAt(0).toUpperCase() + employee.jobCategory.jobName.slice(1).toLowerCase() : 'N/A'}</td>
+                        <td>${employee.contact}</td>
+                        <td>${employee.subplace?.name || employee.place?.name || 'N/A'}</td>
+                        <td>
+                            <!-- Assuming userActive is a JavaScript variable -->
+                            <button class="btn btn-primary btn-sm book-btn" 
+                                    data-employee-id="${employee.id}" 
+                                    data-user-id="${a}" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#taskModal">
+                                Book
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm view-btn" data-employee-id="${employee.id}">View</button>
+                        </td>
+                    </tr>
+                `).join('');
+    
+                // Add rows to the table
+                table.innerHTML = thead + `<tbody>${rows}</tbody>`;
+                container.appendChild(table);
+            } else {
+                // If no non-booked employees are found
+                container.innerHTML = '<p>No records found.</p>';
+            }
+        } else {
+            // If no data is passed or the data array is empty
+            container.innerHTML = '<p>No employees found for the selected criteria.</p>';
+        }
+    }
+    
+    
+        // Event Listener for Booking Button
+        document.addEventListener('click', async (event) => {
+            if (event.target.classList.contains('book-btn')) {
+                const employeeId = event.target.dataset.employeeId;
+                document.getElementById('confirmBooking').dataset.employeeId = employeeId;
+            }
+        });
+    
+        // Confirm Booking Event Listener
+        document.getElementById('confirmBooking').addEventListener('click', async () => {
+        const employeeId = document.getElementById('confirmBooking').dataset.employeeId;
+        const userId = a; // Assuming 'a' is set globally and holds the user ID.
+        const description = document.getElementById('taskDescription').value;
+    
+        try {
+            // Log input values for debugging
+            console.log('Employee ID:', employeeId, 'User ID:', userId, 'Description:', description);
+    
+            // Make the POST request
+            const response = await fetch('/book', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ employeeId, userId, description }),
+            });
+    
+            // Parse and check the response
+            const responseData = await response.json();
+            console.log('Server Response:', responseData);
+    
+            if (!response.ok) {
+                throw new Error(responseData.message || 'Failed to book employee');
+            }
+    
+            // Show success alert
+            alert('Booking successful!');
+    
+            // Close the modal using Bootstrap's modal API
+            const taskModal = document.getElementById('taskModal');
+            const bootstrapModal = bootstrap.Modal.getInstance(taskModal);
+            bootstrapModal.hide();
+        } catch (error) {
+            console.error('Error during booking:', error);
+            alert('Booking failed. Please try again.');
+        }
+    });
+    
+    // employee view 
+        document.addEventListener('click', async (event) => {
+            if (event.target.classList.contains('view-btn')) {
+                const employeeId = event.target.dataset.employeeId;
+    
+                try {
+                    const response = await fetch(`/employee/${employeeId}`);
+                    if (!response.ok) throw new Error('Failed to fetch employee details');
+    
+                    const data = await response.json();
+    
+                    // Populate modal with employee details
+                    // document.getElementById('employeePhoto').src = data.photoUrl;
+                    document.getElementById('employeeName').textContent = data.name.charAt(0).toUpperCase() + data.name.slice(1).toLowerCase();
+                    document.getElementById('employeeJobTitle').textContent = data.jobTitle.charAt(0).toUpperCase() + data.jobTitle.slice(1).toLowerCase();
+                    document.getElementById('employeePlace').textContent = data.place.charAt(0).toUpperCase() + data.place.slice(1).toLowerCase();
+                    document.getElementById('employeeAvailability').textContent = data.availability;
+                    document.getElementById('employeeContact').textContent = data.contact;
+                    document.getElementById('employeePerformance').textContent = data.performance;
+    
+                    // Populate reviews
+                const reviewsContainer = document.getElementById('employeeReviews');
+                reviewsContainer.innerHTML = ''; // Clear any existing reviews
+                if (data.reviews.length > 0) {
+                    data.reviews.forEach((review) => {
+                        const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                        const reviewItem = document.createElement('li');
+                        reviewItem.innerHTML = `
+                            <div class="review-header">
+                                <img src="${review.profilePhoto}" alt="User" class="rounded-circle" width="40" height="40">
+                                <span class="reviewer-name">${review.user.charAt(0).toUpperCase() + review.user.slice(1).toLowerCase()}</span>
+                                <span class="review-rating">${stars}</span>
+                            </div>
+                            <div class="review-text">${review.comment}</div>
+                            <small class="text-muted">Reviewed on ${new Date(review.createdAt).toLocaleDateString()}</small>
+                        `;
+                        reviewsContainer.appendChild(reviewItem);
+                    });
+                } else {
+                    reviewsContainer.innerHTML = '<p>No reviews available</p>';
+                }
+    
+                    // Show modal
+                    const employeeModal = new bootstrap.Modal(document.getElementById('employeeModal'));
+                    employeeModal.show();
+                } catch (error) {
+                    console.error('Error fetching employee details:', error);
+                    alert('Failed to fetch employee details. Please try again.');
+                }
+            }
+        });
+    
+    </script>
+    
+</body>
+</html>

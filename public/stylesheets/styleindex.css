@@ -1,0 +1,277 @@
+/* *{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+
+}
+
+@font-face {
+    font-family: my_font;
+    src: url("vendors/fonts/Lato-Light.ttf");
+}
+
+html,
+body{
+    background-color: #fff;
+    color: #555;
+    font-family: my_font;
+    font-weight: 300;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+} */
+
+/* body::before {
+    display: block;
+    content: '';
+    height: 60px;
+} */
+
+
+#map {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* .name-box {
+    color: #afafaf;
+    border-radius: 50%;
+    font-weight: 400;
+    margin-right: 2px;
+  } */
+
+.username-link {
+    font-weight: 500; 
+    color: #ffc107; 
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.username-link:hover {
+    color: #e0e0e0;
+    text-decoration: none;
+}
+
+.img-fluid{
+    border-radius: 20px;
+}
+
+/* Styling for the search results table */
+#resultsContainer {
+    margin-top: 30px;
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+.navbar {
+    background-color: #1f1f1f;
+}
+.navbar-brand {
+    font-weight: bold;
+    color: #ffc107 !important;
+}
+.wht-links {
+    color: #e0e0e0 !important;
+}
+.showcase {
+    background: linear-gradient(to right, #1f1f1f, #343434);
+    color: #e0e0e0;
+    padding: 4rem 2rem;
+}
+.showcase h1 span {
+    color: #ffc107;
+}
+.showcase .btn-warning {
+    background-color: #ffc107;
+    color: #121212;
+    border: none;
+}
+.card {
+    background-color: #1f1f1f;
+    border: none;
+    color: #e0e0e0;
+}
+.card .bi {
+    font-size: 2.5rem;
+    color: #ffc107;
+}
+.form-select, .btn-dark {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #ffc107;
+}
+.results-table {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+.modal-content {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+footer {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+
+/* overview */
+/* Overview Section Styling */
+#overviewSection {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+#overviewSection .card {
+    background-color: #1f1f1f;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#overviewSection .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+}
+
+#overviewSection h3 {
+    color: #ffc107;
+}
+
+#overviewSection p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+
+/* Style for the table in the results container */
+#resultsContainer table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+    border-radius: 0.25rem;
+}
+
+#resultsContainer th, #resultsContainer td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #343434;
+}
+
+#resultsContainer th {
+    background-color: #343434;
+    color: #ffc107;
+    font-weight: bold;
+}
+
+#resultsContainer td {
+    background-color: #3b3b3b;
+    color: #ddd;
+}
+
+#resultsContainer td button {
+    margin-top: 5px;
+}
+
+#resultsContainer td button.book-btn {
+    background-color: #ffc107;
+    color: #121212;
+    border: none;
+}
+
+#resultsContainer td button.view-btn {
+    background-color: #343434;
+    color: #e0e0e0;
+    border: none;
+}
+
+#resultsContainer td button.book-btn:hover, #resultsContainer td button.view-btn:hover {
+    opacity: 0.8;
+}
+
+#resultsContainer p {
+    color: #e0e0e0;
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+
+
+/* review modal */
+.reviews-body p {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Space between rows */
+}
+
+.reviews-body strong {
+    min-width: 120px; 
+    display: inline-block;
+    /* color: #333; */
+}
+
+.reviews-body span {
+    text-align: left;
+    /* color: #555; */
+}
+
+.reviews-body hr {
+    margin: 15px 0;
+    border-color: #ddd; 
+}
+
+#employeeReviews li {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+#employeeReviews li:hover {
+    background-color: #f1f1f1;
+}
+
+#employeeReviews li .review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+#employeeReviews li .review-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+#employeeReviews li .review-header .reviewer-name {
+    font-weight: 600;
+    margin-right: auto;
+    color: #333;
+}
+#employeeReviews li .review-rating {
+    display: flex;
+    align-items: center;
+    color: #f0c14b;
+    margin-bottom: 10px;
+}
+#employeeReviews li .review-text {
+    font-size: 1rem;
+    color: #000;
+}
+#employeeReviews li small {
+    color: #888;
+}
+
+@media (min-width:768px){
+    .news-input {
+        width: 50%;
+    }
+}
+
+

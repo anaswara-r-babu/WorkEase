@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>User - BookStatus</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="../assets/img/favicon.png" rel="icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <%- include('header') %>
+    <%- include('sidebar') %>
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Blank Page</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item">Pages</li>
+          <li class="breadcrumb-item active">Blank</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <h1>Main contents here...</h1>
+    </section>
+
+    <!-- <div class="container mt-5">
+        <h2>Rate Your Bookings</h2>
+        <% if (bookings.length > 0) { %>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Booking Code</th>
+                        <th>Task Description</th>
+                        <th>Employee Name</th>
+                        <th>Booked By</th>
+                        <th>Booking Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% bookings.forEach(booking => { %>
+                        <tr>
+                            <td><%= booking.code %></td>
+                            <td><%= booking.description || 'N/A' %></td>
+                            <td><%= booking.employee?.name || 'N/A' %></td>
+                            <td><%= booking.user?.name || 'You' %></td>
+                            <td><%= booking.status %></td>
+                            <td>
+                                <% if (booking.status === 'pending' || booking.status === 'accepted') { %>
+                                    <button 
+                                        class="btn btn-danger btn-sm withdraw-btn" 
+                                        data-booking-id="<%= booking.id %>">
+                                        Withdraw
+                                    </button>
+                                <% } else { %>
+                                    <span>Action Not Available</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No bookings found.</p>
+        <% } %>
+    </div> -->
+
+    <div class="container my-4">
+      <h2 class="text-center mb-4">Booking Status</h2>
+      <div class="row">
+        <% bookings.forEach(booking => { %>
+          <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  Booking Code: <span class="text-primary"><%= booking.code %></span>
+                </h5>
+                <p class="card-text">
+                  <strong>User:</strong> <%= booking.user?.name.charAt(0).toUpperCase() + booking.user?.name.slice(1) || 'You' %><br>
+                  <strong>Employee:</strong> <%= booking.employee?.name.charAt(0).toUpperCase() + booking.employee?.name.slice(1) || 'N/A' %><br>
+                  <strong>Description:</strong> <%= booking.description || 'N/A' %><br>
+                  <strong>Status:</strong>
+                  <span class="badge <%= booking.status === 'completed' ? 'bg-success' : booking.status === 'pending' ? 'bg-warning' : 'bg-secondary' %>">
+                    <%= booking.status %>
+                  </span>
+                </p>
+                <% if (booking.status === 'completed') { %>
+                  <% if (booking.rating.length > 0) { %>
+                    <p>
+                      <strong>Rated:</strong> <%= booking.rating[0].rating %>/5<br>
+                      <% if (booking.rating[0].review) { %>
+                        <strong>Review:</strong> <%= booking.rating[0].review %>
+                      <% } %>
+                    </p>
+                  <% } else { %>
+                    <form
+                      action="/user/rate-booking"
+                      method="POST"
+                      class="rating-form"
+                      onsubmit="this.style.display='none'">
+                      <input type="hidden" name="bookingId" value="<%= booking.id %>">
+                      <div class="mb-3">
+                        <label for="rating-<%= booking.id %>" class="form-label">Rate:</label>
+                        <select id="rating-<%= booking.id %>" class="form-select" name="rating" required>
+                          <option value="">Select Rating</option>
+                          <option value="1">⭐</option>
+                          <option value="2">⭐⭐</option>
+                          <option value="3">⭐⭐⭐</option>
+                          <option value="4">⭐⭐⭐⭐</option>
+                          <option value="5">⭐⭐⭐⭐⭐</option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <textarea
+                          class="form-control"
+                          name="review"
+                          placeholder="Add a review (optional)"
+                          rows="2"
+                        ></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </form>
+                  <% } %>
+
+                  <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#complaintModal-<%= booking.id %>">
+                    Register Complaint
+                  </button>
+
+                  <!-- Complaint Modal -->
+                  <!-- Complaint Modal -->
+                  <div class="modal fade" id="complaintModal-<%= booking.id %>" tabindex="-1" aria-labelledby="complaintModalLabel-<%= booking.id %>" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="complaintModalLabel-<%= booking.id %>">Register Complaint</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="/user/register-complaint" method="POST">
+                          <div class="modal-body">
+                            <!-- Hidden inputs to pass employeeId and bookingId -->
+                            <input type="hidden" name="employeeId" value="<%= booking.employeeId %>">
+                            <input type="hidden" name="bookingId" value="<%= booking.id %>">
+
+                            <!-- Description field -->
+                            <div class="mb-3">
+                              <label for="complaint-description-<%= booking.id %>" class="form-label">Description</label>
+                              <textarea
+                                id="complaint-description-<%= booking.id %>"
+                                name="description"
+                                class="form-control"
+                                rows="3"
+                                required
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                <% } else if (booking.status === 'pending' || booking.status === 'accepted') { %>
+                  <button
+                    class="btn btn-danger w-100 withdraw-btn"
+                    data-booking-id="<%= booking.id %>">
+                    Withdraw
+                  </button>
+                <% } else { %>
+                  <p class="text-muted">Action Not Available</p>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <!-- <div class="copyright">
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div> -->
+    <div class="credits">
+      Designed by <a href="#">Anaswara</a>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="../assets/vendor/echarts/echarts.min.js"></script>
+  <script src="../assets/vendor/quill/quill.min.js"></script>
+  <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+  <!-- <script>
+    document.addEventListener('click', async (event) => {
+        if (event.target.classList.contains('withdraw-btn')) {
+            const bookingId = event.target.dataset.bookingId;
+            if (confirm('Are you sure you want to withdraw this booking?')) {
+                try {
+                    const response = await fetch('/user/withdraw-booking', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ bookingId }),
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Booking withdrawn successfully');
+                        location.reload();
+                    } else {
+                        alert('Failed to withdraw booking');
+                    }
+                } catch (error) {
+                    console.error('Error withdrawing booking:', error);
+                    alert('Error withdrawing booking. Please try again later.');
+                }
+            }
+        }
+    });
+  </script> -->
+
+  <script>
+
+    document.addEventListener('click', async (event) => {
+        if (event.target.classList.contains('withdraw-btn')) {
+            const bookingId = event.target.dataset.bookingId;
+            if (confirm('Are you sure you want to withdraw this booking?')) {
+                try {
+                    const response = await fetch('/user/withdraw-booking', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ bookingId }),
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Booking withdrawn successfully');
+                        location.reload();
+                    } else {
+                        alert('Failed to withdraw booking');
+                    }
+                } catch (error) {
+                    console.error('Error withdrawing booking:', error);
+                    alert('Error withdrawing booking. Please try again later.');
+                }
+            }
+        }
+    });
+  </script>
+
+</body>
+
+</html>

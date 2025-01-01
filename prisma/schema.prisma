@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model admin {
+  id            Int           @id @default(autoincrement())
+  adminUUID     String        @unique @default(uuid())
+  username      String        @unique
+  password      String
+  createAt      DateTime      @default(now())
+  updateAt      DateTime      @updatedAt
+  jobCategories JobCategory[]
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  // userUUID  String   @unique @default(uuid())
+  name            String
+  email           String    @unique
+  password        String
+  contact         String    @unique
+  address         String
+  place           String // City or area name
+  confirmationKey String?
+  is_active       Boolean   @default(false)
+  lastLogin       DateTime? @default(now())
+  // latitude        Float? // Latitude for distance calculation
+  // longitude       Float?
+  maplink         String?
+  profilePhoto    String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  bookings Booking[]
+
+  rating Rating[]
+
+  complaints Complaints[]
+}
+
+model JobCategory {
+  id        Int        @id @default(autoincrement())
+  jobName   String
+  adminId   Int
+  createdBy admin      @relation(fields: [adminId], references: [id])
+  createdAt DateTime   @default(now())
+  employees Employee[] // Relation to Employee
+}
+
+model Employee {
+  id                Int      @id @default(autoincrement())
+  name              String
+  email             String   @unique
+  password          String
+  contact           String
+  address           String?
+  isActive          Boolean  @default(true)
+  isBooked          Boolean? @default(false)
+  confirmationKey   Boolean? @default(false)
+  confirmationToken String?  @unique
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  profilePhoto      String?
+
+  placeId Int
+  place   Place @relation(fields: [placeId], references: [id])
+
+  subplaceId Int
+  subplace   Subplace @relation(fields: [subplaceId], references: [id])
+
+  jobCategoryId Int
+  jobCategory   JobCategory @relation(fields: [jobCategoryId], references: [id])
+
+  bookings Booking[]
+
+  performance String?
+  rating      Rating[]
+
+  complaints Complaints[]
+}
+
+model Booking {
+  id          Int          @id @default(autoincrement())
+  code        String       @unique
+  description String?
+  status      String       @default("pending") //pending,completed,rejected,withdrawn
+  bookingDate DateTime     @default(now())
+  isDelete    Boolean      @default(false)
+  updatedAt   DateTime?    @updatedAt
+  employeeId  Int
+  employee    Employee     @relation(fields: [employeeId], references: [id])
+  userId      Int
+  user        User         @relation(fields: [userId], references: [id])
+  rating      Rating[] //new
+  complaints  Complaints[]
+}
+
+model Place {
+  id        Int        @id @default(autoincrement())
+  name      String?    @unique
+  subplaces Subplace[] // One-to-Many relationship
+  employees Employee[]
+}
+
+model Subplace {
+  id        Int        @id @default(autoincrement())
+  name      String?
+  placeId   Int // Foreign key to Place
+  place     Place      @relation(fields: [placeId], references: [id]) // Relation setup
+  employees Employee[]
+}
+
+model Rating {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  bookingId  Int? //new
+  booking    Booking? @relation(fields: [bookingId], references: [id]) //new
+  rating     Int
+  review     String?
+  createdAt  DateTime @default(now())
+}
+
+model Complaints {
+  id          Int      @id @default(autoincrement())
+  employeeId  Int
+  userId      Int
+  description String
+  // status      String   @default("Pending")
+  createdAt   DateTime @default(now())
+  bookingId   Int // Foreign key to Booking model
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+
+  employee Employee @relation(fields: [employeeId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+}
