@@ -61,6 +61,29 @@ After setting up the `.env` file, open the terminal and run the following comman
 
 ```bash
 npx prisma migrate dev --name init
+```
+
+## 6. Manage Database with Prisma Studio
+
+To view and manage the database tables, run the following command:
+
+```bash
+npx prisma studio
+```
+
+## 7. Start the Project
+
+Once the setup is complete, start the project by running the following command:
+
+```bash
+npm start
+```
+
+This will provide a URL. Paste it in your browser to view the project.
+
+```vbnet
+This should fit perfectly into your README. Let me know if you'd like to adjust anything else!
+```
 
 
 
