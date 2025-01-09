@@ -46,3 +46,21 @@ SESSION_KEY='your secret key'
 JWT_KEY='your secret key'
 EMAIL='your email address used for sending confirmation keys to users/employees'
 APP_PASSWORD='app password generated for the email used'
+```
+# App Setup Guide
+
+## Important Steps for Generating App Password:
+
+1. Log in to the email you used above.
+2. Go to **Manage Accounts** → **Security** → **Enable Two-Factor Authentication** (important).
+3. Search for **App Password** → Name the app (e.g., `mailApi`).
+
+## 5. Run Prisma Migration
+
+After setting up the `.env` file, open the terminal and run the following command to create tables in your PostgreSQL database:
+
+```bash
+npx prisma migrate dev --name init
+
+
+
