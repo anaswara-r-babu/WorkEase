@@ -15,7 +15,7 @@ For better usage, use VS Code as your text editor.
 After unzipping the project, open it using VS Code.
 Open the VS Code terminal and run the following command to install the necessary dependencies:
 
-npm install
+        npm install
 
 3. Set Up PostgreSQL Database
 Install PostgreSQL on your machine (if not already installed).
@@ -27,12 +27,12 @@ Create a .env file in the root directory of the project.
 
 Add the following configurations inside the .env file:
 
-DATABASE_URL='database connection using prisma'
-PORT=3001  # You can also use 3000 if 3001 doesn't work
-SESSION_KEY='your secret key'
-JWT_KEY='your secret key'
-EMAIL='your email address used for sending confirmation keys to users/employees'
-APP_PASSWORD='app password generated for the email used'
+    DATABASE_URL='database connection using prisma'
+    PORT=3001  # You can also use 3000 if 3001 doesn't work
+    SESSION_KEY='your secret key'
+    JWT_KEY='your secret key'
+    EMAIL='your email address used for sending confirmation keys to users/employees'
+    APP_PASSWORD='app password generated for the email used'
 
 
 Important Steps for Generating App Password:
@@ -44,16 +44,16 @@ Important Steps for Generating App Password:
 5. Run Prisma Migration
 After setting up the .env file, open the terminal and run the following command to create tables in your PostgreSQL database:
 
-npx prisma migrate dev --name init
+        npx prisma migrate dev --name init
 
 6. Manage Database with Prisma Studio
 To view and manage the database tables, run the following command:
 
-npx prisma studio
+        npx prisma studio
 
 7. Start the Project
 Once the setup is complete, start the project by running the following command:
 
-npm start
+        npm start
 
 This will provide a URL. Paste it in your browser to view the project.
