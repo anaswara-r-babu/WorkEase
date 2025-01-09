@@ -81,9 +81,6 @@ npm start
 
 This will provide a URL. Paste it in your browser to view the project.
 
-```vbnet
-This should fit perfectly into your README. Let me know if you'd like to adjust anything else!
-```
 
 
 
