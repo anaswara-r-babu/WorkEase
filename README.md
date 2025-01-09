@@ -23,3 +23,26 @@ WorkEase is a project built using Node.js, Express.js, and Prisma, designed to m
 
   ```bash
   npm install
+
+
+# Project Setup Guide
+
+## 3. Set Up PostgreSQL Database
+
+1. Install PostgreSQL on your machine (if not already installed).
+2. Create a new database in PostgreSQL, for example, `jobportaldb`. You can also create your own database name.
+3. After creating the database, proceed to the next step.
+
+## 4. Create .env File
+
+Create a `.env` file in the root directory of the project.
+
+Add the following configurations inside the `.env` file:
+
+```env
+DATABASE_URL='database connection using prisma'
+PORT=3001  # You can also use 3000 if 3001 doesn't work
+SESSION_KEY='your secret key'
+JWT_KEY='your secret key'
+EMAIL='your email address used for sending confirmation keys to users/employees'
+APP_PASSWORD='app password generated for the email used'
