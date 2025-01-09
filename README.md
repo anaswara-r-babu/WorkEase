@@ -90,5 +90,5 @@ This will provide a URL. Paste it in your browser to view the project.
 
 ![image alt](https://github.com/anaswara-r-babu/WorkEase/blob/8f62186e40eb739b5c77cfb64799ff7dda03e827/screenshots/dashboard-admin.png)
 
-![image alt]()
+![image alt](https://github.com/anaswara-r-babu/WorkEase/blob/b5106d2409b6bba45dc4d1451aa9bca31a1522a8/screenshots/booking.png)
 
