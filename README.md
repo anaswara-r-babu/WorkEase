@@ -86,7 +86,7 @@ This will provide a URL. Paste it in your browser to view the project.
 
 ![image alt](https://github.com/anaswara-r-babu/WorkEase/blob/30edf36822fac5a4ffeb758e06f6afbdbfd767b0/screenshots/login.png)
 
-![image alt]()
+![image alt](https://github.com/anaswara-r-babu/WorkEase/blob/94005f78ad11270304a66a4b8fa91dc90f93e5e3/screenshots/user-reg.png)
 
 ![image alt]()
 
